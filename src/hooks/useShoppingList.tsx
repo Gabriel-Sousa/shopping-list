@@ -24,8 +24,19 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
   const [ShoppingList, setShoppingList] = useState<product[]>([])
 
   function onSetShoppingList(product: product) {
+    const typeAllowed = ['unidade', 'litro', 'quilograma']
+    const verificationOfType = !typeAllowed.includes(product.type)
+
+    if (
+      product.name === '' ||
+      product.amount === 0 ||
+      product.category === '' ||
+      verificationOfType
+    ) {
+      return
+    }
+    setShoppingList([...ShoppingList, product])
     console.log(product)
-    // setShoppingList()
   }
 
   return (

@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <ShoppingListProvider>
       <main className="relative w-full">
-        <Image src={background} alt="" />
+        <Image src={background} alt="" priority />
         <div className="relative z-10 mx-auto  max-w-3xl p-6 md:mt-[-135px]">
           <Header />
           <div className="mt-10">
