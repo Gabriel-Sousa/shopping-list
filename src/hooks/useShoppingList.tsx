@@ -1,17 +1,26 @@
 'use client'
 
-import { ReactNode, createContext, useContext, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
-type product = {
+type Product = {
+  id: string
   name: string
   amount: number
   type: 'unidade' | 'litro' | 'quilograma'
-  category: string
+  category: 'fruta' | 'padaria' | 'legume' | 'bebida' | 'carne'
+  isChecked: boolean
 }
 
 interface ShoppingListContextData {
-  ShoppingList: product[]
-  onSetShoppingList: (product: product) => void
+  shoppingList: Product[]
+  addShoppingList: (product: Product) => void
+  changeChecked: (id: string) => void
 }
 
 interface ShoppingListProviderProp {
@@ -21,26 +30,81 @@ interface ShoppingListProviderProp {
 export const ShoppingListContext = createContext({} as ShoppingListContextData)
 
 export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
-  const [ShoppingList, setShoppingList] = useState<product[]>([])
+  const [shoppingList, setShoppingList] = useState<Product[]>([])
 
-  function onSetShoppingList(product: product) {
+  useEffect(() => {
+    const storedStateAsJSON = localStorage.getItem(
+      '@shopping-list:products-state-1.0.0',
+    )
+
+    if (storedStateAsJSON) {
+      setShoppingList(JSON.parse(storedStateAsJSON))
+    }
+  }, [])
+
+  function addShoppingList(product: Product) {
     const typeAllowed = ['unidade', 'litro', 'quilograma']
     const verificationOfType = !typeAllowed.includes(product.type)
+
+    const categoryAllowed = ['fruta', 'padaria', 'legume', 'bebida', 'carne']
+    const verificationOfCategory = !categoryAllowed.includes(product.category)
 
     if (
       product.name === '' ||
       product.amount === 0 ||
-      product.category === '' ||
+      verificationOfCategory ||
       verificationOfType
     ) {
       return
     }
-    setShoppingList([...ShoppingList, product])
-    console.log(product)
+
+    const storedStateAsJSON = localStorage.getItem(
+      '@shopping-list:products-state-1.0.0',
+    )
+
+    if (storedStateAsJSON) {
+      const dataAlreadyInLocalStorage = JSON.parse(
+        storedStateAsJSON,
+      ) as Product[]
+
+      localStorage.setItem(
+        '@shopping-list:products-state-1.0.0',
+        JSON.stringify([product, ...dataAlreadyInLocalStorage]),
+      )
+
+      setShoppingList([...shoppingList, product])
+
+      return
+    }
+
+    localStorage.setItem(
+      '@shopping-list:products-state-1.0.0',
+      JSON.stringify([product]),
+    )
+
+    setShoppingList([product])
+  }
+
+  function changeChecked(id: string) {
+    const changedItem = shoppingList.map((item) => {
+      if (item.id === id) {
+        return { ...item, isChecked: !item.isChecked }
+      } else {
+        return item
+      }
+    })
+
+    setShoppingList(changedItem)
+    localStorage.setItem(
+      '@shopping-list:products-state-1.0.0',
+      JSON.stringify(changedItem),
+    )
   }
 
   return (
-    <ShoppingListContext.Provider value={{ ShoppingList, onSetShoppingList }}>
+    <ShoppingListContext.Provider
+      value={{ shoppingList, addShoppingList, changeChecked }}
+    >
       {children}
     </ShoppingListContext.Provider>
   )

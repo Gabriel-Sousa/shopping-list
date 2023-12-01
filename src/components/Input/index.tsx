@@ -29,9 +29,10 @@ export function Input({ variant, name }: InputProps) {
         </label>
         <div className="flex">
           <input
-            type="number"
+            type="text"
             name={name}
             id={name}
+            autoComplete="off"
             placeholder={'1'}
             className="w-1/2 rounded-bl-md rounded-tl-md border border-gray-300 bg-gray-500 p-3 text-gray-100 focus:outline focus:outline-purple-light"
           />
