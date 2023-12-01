@@ -23,7 +23,7 @@ export function Header() {
   }
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-2xl font-bold ">Lista de Compras</h1>
+      <h1 className="text-2xl font-bold text-gray-100 ">Lista de Compras</h1>
 
       <form
         onSubmit={handleForm}
