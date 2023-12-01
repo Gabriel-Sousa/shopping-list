@@ -82,7 +82,9 @@ export function Input({ variant, name }: InputProps) {
           ${category === 'Selecione' && 'text-gray-200'}
           ${isCategoryOpen && 'border border-purple-light'}`}
         >
-          <span>{category.charAt(0).toUpperCase() + category.slice(1)}</span>
+          <span className="text-base">
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </span>
           <span
             className={`
             transition-all duration-300
