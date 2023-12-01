@@ -13,14 +13,16 @@ type Product = {
   name: string
   amount: number
   type: 'unidade' | 'litro' | 'quilograma'
-  category: 'fruta' | 'padaria' | 'legume' | 'bebida' | 'carne'
+  category: string
   isChecked: boolean
 }
 
 interface ShoppingListContextData {
   shoppingList: Product[]
+  category: string
   addShoppingList: (product: Product) => void
   changeChecked: (id: string) => void
+  saveCategory: (category: string) => void
 }
 
 interface ShoppingListProviderProp {
@@ -31,6 +33,7 @@ export const ShoppingListContext = createContext({} as ShoppingListContextData)
 
 export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
   const [shoppingList, setShoppingList] = useState<Product[]>([])
+  const [category, setCategory] = useState<string>('Selecione')
 
   useEffect(() => {
     const storedStateAsJSON = localStorage.getItem(
@@ -72,7 +75,7 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
         JSON.stringify([product, ...dataAlreadyInLocalStorage]),
       )
 
-      setShoppingList([...shoppingList, product])
+      setShoppingList([product, ...shoppingList])
 
       return
     }
@@ -101,9 +104,19 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
     )
   }
 
+  function saveCategory(category: string) {
+    setCategory(category)
+  }
+
   return (
     <ShoppingListContext.Provider
-      value={{ shoppingList, addShoppingList, changeChecked }}
+      value={{
+        shoppingList,
+        category,
+        addShoppingList,
+        changeChecked,
+        saveCategory,
+      }}
     >
       {children}
     </ShoppingListContext.Provider>

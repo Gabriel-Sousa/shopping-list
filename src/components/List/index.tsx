@@ -13,9 +13,7 @@ import {
 export function List() {
   const { shoppingList, changeChecked } = useShoppingList()
 
-  function category(
-    category: 'fruta' | 'padaria' | 'legume' | 'bebida' | 'carne',
-  ) {
+  function category(category: string) {
     switch (category) {
       case 'fruta':
         return <LuApple size={16} />
@@ -41,7 +39,7 @@ export function List() {
       return (
         <div>
           <div
-            className={`flex items-center rounded bg-success p-[2px] text-gray-100 hover:bg-success-light`}
+            className={`flex items-center rounded bg-success p-[2px] text-gray-100 transition-colors hover:bg-success-light`}
           >
             <LuCheck size={16} />
           </div>
@@ -51,7 +49,7 @@ export function List() {
       return (
         <div>
           <div
-            className={`h-[20px] w-[20px] rounded border-[2px] border-purple hover:bg-purple-dark`}
+            className={`h-[20px] w-[20px] rounded border-[2px] border-purple transition-colors hover:bg-purple-dark`}
           />
         </div>
       )
@@ -64,7 +62,7 @@ export function List() {
         <div
           key={product.id}
           className={`flex items-center justify-between rounded-lg border border-gray-300 bg-gray-400 p-4 
-          ${product.isChecked && 'border-gray-400 bg-gray-500 '}`}
+          ${product.isChecked && 'border-gray-400 bg-gray-500'}`}
         >
           <div className="flex items-center gap-4">
             <button onClick={() => changeChecked(product.id)}>

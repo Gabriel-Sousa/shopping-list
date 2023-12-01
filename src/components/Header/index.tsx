@@ -5,7 +5,7 @@ import { LuPlus } from 'react-icons/lu'
 import { useShoppingList } from '@/hooks/useShoppingList'
 
 export function Header() {
-  const { addShoppingList } = useShoppingList()
+  const { addShoppingList, category } = useShoppingList()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleForm(e: any) {
     e.preventDefault()
@@ -15,7 +15,7 @@ export function Header() {
       name: target.name.value,
       amount: Number(target.quantity.value),
       type: target.type.value,
-      category: target.category.value,
+      category,
       isChecked: false,
     }
 

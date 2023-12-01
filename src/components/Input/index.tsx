@@ -1,4 +1,7 @@
-'use client'
+import { useShoppingList } from '@/hooks/useShoppingList'
+import { useState } from 'react'
+import { LuChevronDown } from 'react-icons/lu'
+import { ButtonCategory } from './ButtonCategory'
 
 interface InputProps {
   variant: 'item' | 'quantity' | 'category'
@@ -6,9 +9,19 @@ interface InputProps {
 }
 
 export function Input({ variant, name }: InputProps) {
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false)
+
+  const { category } = useShoppingList()
+
+  const categories = ['fruta', 'padaria', 'legume', 'bebida', 'carne']
+
+  function closeCategoryMenu() {
+    setIsCategoryOpen(false)
+  }
+
   if (variant === 'item') {
     return (
-      <div className="flex w-3/4 flex-col gap-2 max-md:w-full ">
+      <div className="flex w-[364px] flex-col gap-2 max-md:w-full ">
         <label htmlFor={name} className="text-xs text-gray-200 ">
           Item
         </label>
@@ -23,7 +36,7 @@ export function Input({ variant, name }: InputProps) {
     )
   } else if (variant === 'quantity') {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex w-full max-w-[145px] flex-col gap-2">
         <label htmlFor={name} className="text-xs text-gray-200 ">
           Quantidade
         </label>
@@ -50,22 +63,46 @@ export function Input({ variant, name }: InputProps) {
     )
   } else {
     return (
-      <div className="flex flex-col gap-2">
-        <label htmlFor={name} className="text-xs text-gray-200 ">
+      <div className="relative flex w-[200px] flex-col gap-2 ">
+        <label
+          htmlFor={name}
+          className={`text-xs text-gray-200
+           ${isCategoryOpen && 'text-purple-light'}
+           ${category !== 'Selecione' && 'text-purple-light'}`}
+        >
           Categoria
         </label>
-        <select
-          name={name}
-          id={name}
-          defaultValue={'padaria'}
-          className="rounded-md border border-gray-300 bg-gray-500 p-3 text-gray-100 focus:outline focus:outline-purple-light"
+
+        <button
+          type="button"
+          onClick={() => {
+            setIsCategoryOpen(!isCategoryOpen)
+          }}
+          className={`flex items-center justify-between rounded-md border border-gray-300 bg-gray-500 p-3 text-left text-sm text-gray-100 
+          ${category === 'Selecione' && 'text-gray-200'}
+          ${isCategoryOpen && 'border border-purple-light'}`}
         >
-          <option value="padaria">Padaria</option>
-          <option value="legume">Legume</option>
-          <option value="carne">Carne</option>
-          <option value="fruta">Fruta</option>
-          <option value="bebida">Bebida</option>
-        </select>
+          <span>{category.charAt(0).toUpperCase() + category.slice(1)}</span>
+          <span
+            className={`
+            transition-all duration-300
+            ${isCategoryOpen && 'rotate-180 text-purple '}`}
+          >
+            <LuChevronDown size={16} />
+          </span>
+        </button>
+
+        {isCategoryOpen && (
+          <div className="absolute top-[76px] z-30 flex w-[220px] flex-col text-gray-100">
+            {categories.map((category) => (
+              <ButtonCategory
+                key={category}
+                categoryName={category}
+                onCloseCategoryMenu={closeCategoryMenu}
+              />
+            ))}
+          </div>
+        )}
       </div>
     )
   }
