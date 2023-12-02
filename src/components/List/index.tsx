@@ -10,6 +10,15 @@ import {
   LuCheck,
 } from 'react-icons/lu'
 
+type Product = {
+  id: string
+  name: string
+  amount: number
+  type: string
+  category: string
+  isChecked: boolean
+}
+
 export function List() {
   const { shoppingList, changeChecked } = useShoppingList()
 
@@ -56,6 +65,61 @@ export function List() {
     }
   }
 
+  function renderText(product: Product) {
+    if (product.type === 'UN.') {
+      const isAmountGreaterThanOne = product.amount > 1
+      if (isAmountGreaterThanOne) {
+        return (
+          <>
+            {product.amount + ' '}
+            {'unidades'}
+          </>
+        )
+      } else {
+        return (
+          <>
+            {product.amount + ' '}
+            {'unidade'}
+          </>
+        )
+      }
+    } else if (product.type === 'L') {
+      const isAmountGreaterThanOne = product.amount > 1
+      if (isAmountGreaterThanOne) {
+        return (
+          <>
+            {product.amount + ' '}
+            {'litros'}
+          </>
+        )
+      } else {
+        return (
+          <>
+            {product.amount + ' '}
+            {'litro'}
+          </>
+        )
+      }
+    } else if (product.type === 'KG') {
+      const isAmountGreaterThanOne = product.amount > 1
+      if (isAmountGreaterThanOne) {
+        return (
+          <>
+            {product.amount + ' '}
+            {'quilogramas'}
+          </>
+        )
+      } else {
+        return (
+          <>
+            {product.amount + ' '}
+            {'quilograma'}
+          </>
+        )
+      }
+    }
+  }
+
   return (
     <div className="flex flex-col gap-3">
       {shoppingList?.map((product) => (
@@ -79,8 +143,7 @@ export function List() {
                 className={`text-xs text-gray-200
                 ${product.isChecked && 'font-normal opacity-50 '}`}
               >
-                {product.amount + ' '}
-                {product.type}
+                {renderText(product)}
               </span>
             </div>
           </div>

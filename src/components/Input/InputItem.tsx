@@ -9,7 +9,10 @@ export function InputItem({ name }: InputItemProps) {
 
   return (
     <div className="flex w-[364px] flex-col gap-2 max-md:w-full ">
-      <label htmlFor={name} className="text-xs text-gray-200 ">
+      <label
+        htmlFor={name}
+        className={`text-xs text-gray-200 ${itemName && 'text-purple-light'}`}
+      >
         Item
       </label>
       <input
