@@ -12,7 +12,7 @@ type Product = {
   id: string
   name: string
   amount: number
-  type: 'unidade' | 'litro' | 'quilograma'
+  type: string
   category: string
   isChecked: boolean
 }
@@ -20,9 +20,15 @@ type Product = {
 interface ShoppingListContextData {
   shoppingList: Product[]
   category: string
-  addShoppingList: (product: Product) => void
+  amount: number
+  type: string
+  itemName: string
+  addProductToShoppingList: () => void
   changeChecked: (id: string) => void
   saveCategory: (category: string) => void
+  saveType: (type: string) => void
+  saveAmount: (amount: number) => void
+  saveItemName: (itemName: string) => void
 }
 
 interface ShoppingListProviderProp {
@@ -34,6 +40,9 @@ export const ShoppingListContext = createContext({} as ShoppingListContextData)
 export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
   const [shoppingList, setShoppingList] = useState<Product[]>([])
   const [category, setCategory] = useState<string>('Selecione')
+  const [amount, setAmount] = useState<number>(0)
+  const [type, setType] = useState<string>('UN.')
+  const [itemName, setItemName] = useState<string>('')
 
   useEffect(() => {
     const storedStateAsJSON = localStorage.getItem(
@@ -45,20 +54,36 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
     }
   }, [])
 
-  function addShoppingList(product: Product) {
-    const typeAllowed = ['unidade', 'litro', 'quilograma']
-    const verificationOfType = !typeAllowed.includes(product.type)
+  function resetInput() {
+    setCategory('Selecione')
+    setAmount(0)
+    setType('UN.')
+    setItemName('')
+  }
+
+  function addProductToShoppingList() {
+    const typeAllowed = ['UN.', 'L', 'KG']
+    const verificationOfType = !typeAllowed.includes(type)
 
     const categoryAllowed = ['fruta', 'padaria', 'legume', 'bebida', 'carne']
-    const verificationOfCategory = !categoryAllowed.includes(product.category)
+    const verificationOfCategory = !categoryAllowed.includes(category)
 
     if (
-      product.name === '' ||
-      product.amount === 0 ||
+      itemName === '' ||
+      amount === 0 ||
       verificationOfCategory ||
       verificationOfType
     ) {
       return
+    }
+
+    const product = {
+      id: String(Date.now()),
+      name: itemName,
+      amount,
+      type,
+      category,
+      isChecked: false,
     }
 
     const storedStateAsJSON = localStorage.getItem(
@@ -76,6 +101,7 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
       )
 
       setShoppingList([product, ...shoppingList])
+      resetInput()
 
       return
     }
@@ -86,6 +112,7 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
     )
 
     setShoppingList([product])
+    resetInput()
   }
 
   function changeChecked(id: string) {
@@ -108,14 +135,32 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
     setCategory(category)
   }
 
+  function saveType(type: string) {
+    setType(type)
+  }
+
+  function saveAmount(amount: number) {
+    setAmount(amount)
+  }
+
+  function saveItemName(itemName: string) {
+    setItemName(itemName)
+  }
+
   return (
     <ShoppingListContext.Provider
       value={{
         shoppingList,
         category,
-        addShoppingList,
+        amount,
+        type,
+        itemName,
+        addProductToShoppingList,
         changeChecked,
         saveCategory,
+        saveAmount,
+        saveItemName,
+        saveType,
       }}
     >
       {children}
