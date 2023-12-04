@@ -8,6 +8,7 @@ import {
   LuCarrot,
   LuSandwich,
   LuCheck,
+  LuTrash,
 } from 'react-icons/lu'
 
 type Product = {
@@ -20,7 +21,7 @@ type Product = {
 }
 
 export function List() {
-  const { shoppingList, changeChecked } = useShoppingList()
+  const { shoppingList, changeChecked, deleteItem } = useShoppingList()
 
   function category(category: string) {
     switch (category) {
@@ -164,9 +165,12 @@ export function List() {
               <span>{product.category}</span>
             </div>
 
-            <div className="text-purple">
-              <LuMoreVertical size={20} />
-            </div>
+            <button
+              onClick={() => deleteItem(product.id)}
+              className="text-red-700 hover:brightness-75"
+            >
+              <LuTrash size={20} />
+            </button>
           </div>
         </div>
       ))}

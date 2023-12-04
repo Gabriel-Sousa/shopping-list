@@ -1,5 +1,4 @@
 import { useShoppingList } from '@/hooks/useShoppingList'
-import { useState } from 'react'
 import { LuChevronDown } from 'react-icons/lu'
 import { ButtonType } from './ButtonType'
 
@@ -8,21 +7,16 @@ interface InputAmountProps {
 }
 
 export function InputAmount({ name }: InputAmountProps) {
-  const { amount, type, saveAmount } = useShoppingList()
+  const { amount, type, saveAmount, isTypeOpen, toggleTypeState, closeType } =
+    useShoppingList()
 
   const types = ['UN.', 'L', 'KG']
-
-  const [isTypeOpen, setIsTypeOpen] = useState(false)
 
   function checkIfString(teste: string) {
     if (isNaN(Number(teste))) {
       return
     }
     saveAmount(Number(teste))
-  }
-
-  function closeTypeMenu() {
-    setIsTypeOpen(false)
   }
 
   return (
@@ -49,7 +43,7 @@ export function InputAmount({ name }: InputAmountProps) {
           <button
             type="button"
             onClick={() => {
-              setIsTypeOpen(!isTypeOpen)
+              toggleTypeState()
             }}
             className={`flex w-full items-center justify-between gap-2 rounded-br-md rounded-tr-md  border border-gray-300 bg-gray-500 p-3 text-left text-sm text-gray-100 
         ${type === 'Selecione' && 'text-gray-200'}
@@ -73,7 +67,7 @@ export function InputAmount({ name }: InputAmountProps) {
                 <ButtonType
                   key={type}
                   typeName={type}
-                  onCloseTypeMenu={closeTypeMenu}
+                  onCloseTypeMenu={closeType}
                 />
               ))}
             </div>

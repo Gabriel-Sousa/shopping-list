@@ -23,12 +23,19 @@ interface ShoppingListContextData {
   amount: number
   type: string
   itemName: string
+  isTypeOpen: boolean
+  isCategoryOpen: boolean
   addProductToShoppingList: () => void
   changeChecked: (id: string) => void
   saveCategory: (category: string) => void
   saveType: (type: string) => void
   saveAmount: (amount: number) => void
   saveItemName: (itemName: string) => void
+  toggleTypeState: () => void
+  toggleCategoryState: () => void
+  closeType: () => void
+  closeCategory: () => void
+  deleteItem: (id: string) => void
 }
 
 interface ShoppingListProviderProp {
@@ -43,6 +50,8 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
   const [amount, setAmount] = useState<number>(0)
   const [type, setType] = useState<string>('UN.')
   const [itemName, setItemName] = useState<string>('')
+  const [isTypeOpen, setIsTypeOpen] = useState(false)
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false)
 
   useEffect(() => {
     const storedStateAsJSON = localStorage.getItem(
@@ -59,6 +68,22 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
     setAmount(0)
     setType('UN.')
     setItemName('')
+  }
+
+  function toggleTypeState() {
+    setIsTypeOpen(!isTypeOpen)
+  }
+
+  function toggleCategoryState() {
+    setIsCategoryOpen(!isCategoryOpen)
+  }
+
+  function closeType() {
+    setIsTypeOpen(false)
+  }
+
+  function closeCategory() {
+    setIsCategoryOpen(false)
   }
 
   function addProductToShoppingList() {
@@ -115,6 +140,15 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
     resetInput()
   }
 
+  function deleteItem(id: string) {
+    const deletedItem = shoppingList.filter((item) => item.id !== id)
+    setShoppingList(deletedItem)
+    localStorage.setItem(
+      '@shopping-list:products-state-1.0.0',
+      JSON.stringify(deletedItem),
+    )
+  }
+
   function changeChecked(id: string) {
     const changedItem = shoppingList.map((item) => {
       if (item.id === id) {
@@ -155,12 +189,19 @@ export function ShoppingListProvider({ children }: ShoppingListProviderProp) {
         amount,
         type,
         itemName,
+        isTypeOpen,
+        isCategoryOpen,
         addProductToShoppingList,
         changeChecked,
         saveCategory,
         saveAmount,
         saveItemName,
         saveType,
+        toggleTypeState,
+        toggleCategoryState,
+        closeType,
+        closeCategory,
+        deleteItem,
       }}
     >
       {children}
