@@ -13,10 +13,10 @@ export function InputCategory({ name }: InputCategoryProps) {
   const categories = ['fruta', 'padaria', 'legume', 'bebida', 'carne']
 
   return (
-    <div className="relative flex w-[200px] flex-col gap-2 ">
+    <div className="relative flex w-[120px] flex-col gap-2 md:w-[200px] ">
       <label
         htmlFor={name}
-        className={`text-xs text-gray-200
+        className={`w-full text-xs text-gray-200
          ${isCategoryOpen && 'text-purple-light'}
          ${category !== 'Selecione' && 'text-purple-light'}`}
       >
@@ -28,7 +28,7 @@ export function InputCategory({ name }: InputCategoryProps) {
         onClick={() => {
           toggleCategoryState()
         }}
-        className={`flex items-center justify-between rounded-md border border-gray-300 bg-gray-500 p-3 text-left text-sm text-gray-100 
+        className={`flex w-full items-center justify-between rounded-md border border-gray-300 bg-gray-500 p-3 text-left text-sm text-gray-100 
         ${category === 'Selecione' && 'text-gray-200'}
         ${isCategoryOpen && 'border border-purple-light'}`}
       >
@@ -45,7 +45,7 @@ export function InputCategory({ name }: InputCategoryProps) {
       </button>
 
       {isCategoryOpen && (
-        <div className="absolute top-[76px] z-30 flex w-[165px] flex-col text-gray-100">
+        <div className="absolute top-[76px] z-30 flex w-[140px] flex-col text-gray-100">
           {categories.map((category) => (
             <ButtonCategory
               key={category}
