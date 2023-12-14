@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<br>
 
-## Getting Started
+<p align="center">
+  <img alt="Shopping List" src=".github/preview.png" width="100%">
+</p>
 
-First, run the development server:
+## 🚀 Tecnologias
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Tecnologias utilizadas no projeto:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- ReactJS
+- NextJS
+- Typescript
+- Tailwindcss
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<br>
 
-## Learn More
+## 💻 Projeto
 
-To learn more about Next.js, take a look at the following resources:
+O Shopping List é uma aplicação que você adicionou o produto em uma lista para comprar no mercado e marca caso já tenha pego.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<br>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## ⚒️ Features
 
-## Deploy on Vercel
+- [x] Adicionar produto na lista
+- [x] Remove produto da lista
+- [x] Marca como pego o produto
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [x] Versão web
+- [x] Versão mobile
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<br>
+
+## 🔖 Layout
+
+Layout da aplicação no [figma](https://www.figma.com/community/file/1276169043084346929).
+
+<br>
+
+## 🌐 Deploy
+
+Você pode ver o site clicando <a href="https://shopping-list-liard-seven.vercel.app/" target="_blank">nesse link</a>.
+
+<br>
+
+## :memo: Licença
+
+Esse projeto está sob a licença MIT. Veja o arquivo <a href="https://github.com/Gabriel-Sousa/shopping-list/blob/main/.github/LICENSE" target="_blank">LICENSE</a>  para mais detalhes.
+
+
+
+
+---
+
+Feito com ♥ por Gabriel Sousa
