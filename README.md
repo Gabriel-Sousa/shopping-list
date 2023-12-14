@@ -47,7 +47,7 @@ Você pode ver o site clicando <a href="https://shopping-list-liard-seven.vercel
 
 ## :memo: Licença
 
-Esse projeto está sob a licença MIT. Veja o arquivo <a href="https://github.com/Gabriel-Sousa/shopping-list/blob/main/.github/LICENSE" target="_blank">LICENSE</a>  para mais detalhes.
+Esse projeto está sob a licença MIT. Veja o arquivo <a href="https://github.com/Gabriel-Sousa/shopping-list/blob/master/.github/LICENSE" target="_blank">LICENSE</a>  para mais detalhes.
 
 
 
